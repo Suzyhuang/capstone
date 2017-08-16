@@ -1,0 +1,55 @@
+@import url('http://fonts.googleapis.com/css?family=Just+Another+Hand');
+
+#nav {
+    text-align: center;
+}
+
+.navlink {
+    margin-left: 40px;
+    font-size: 1.5em;
+    border: none;
+    outline-style: none;
+    font-family: 'Just Another Hand', cursive;
+    color: black;
+}
+
+/*.navlink:hover {
+    color: yellow;
+}*/
+
+.navactive {
+    color: blue;
+}
+
+.maindiv {
+    display: none;
+}
+
+.mainactive {
+    display: inherit;
+}
+
+#nav-intro:hover {
+ color: #DBAEEA ;
+}
+
+#nav-edu:hover {
+ color: #DEA6E4 ;
+}
+
+#nav-pubs:hover {
+ color: #E29FDF ;
+}
+
+#nav-interest:hover {
+ color: #E597DA ;
+}
+
+#nav-contact:hover {
+ color: #E990D5 ;
+}
+
+.bandTitle {
+    font-family: 'Just Another Hand', cursive;
+    font-size: 1.5em;
+}
