@@ -6,6 +6,8 @@ var mainDiv = document.createElement('div');
 mainDiv.id = 'main';
 body.appendChild(mainDiv);
 
+
+
 // var map1 = google.maps.Map(document.getElementById('map');
 
 function initMap() {
@@ -30,16 +32,18 @@ function initMap() {
         console.log(url)
 
         //sends it to Yelp api to get info
-        let interestsDiv = document.getElementById('main');
+        // let interestsDiv = document.getElementById('main');
         let eventContainer = document.createElement('div');
-        interestsDiv.appendChild(eventContainer);
+        eventContainer.id = 'eventContain'
+        mainDiv.appendChild(eventContainer);
         let eventTitleDiv = document.createElement('div');
         eventContainer.appendChild(eventTitleDiv);
         let t = document.createTextNode(name);
         eventTitleDiv.appendChild(t);
-        eventTitleDiv.className = "eventTitle"
-        // let concertsDiv = document.createElement('div');
-        // bandContainer.appendChild(concertsDiv);
+        eventTitleDiv.className = "eventTitle" //to make things different font
+
+        let eventsDiv = document.createElement('div');
+        eventContainer.appendChild(eventsDiv);
 
         // const xttp = new XMLHttpRequest();
         // xttp.onreadystatechange = function() {
