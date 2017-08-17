@@ -1,18 +1,24 @@
 @import url('http://fonts.googleapis.com/css?family=Just+Another+Hand');
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
 
  #map {
         height: 400px;
         width: 100%;
        }
-/*h3{color:blue;}*/
-
 
 h3 {
   align-items: center;
   display: flex;
   flex-direction: column;
   color:blue;
+   font-family: 'Bree Serif', serif;
+   font-size:1.5em;
 }
+
+.eventTitle{
+    font-family: 'Bree Serif', serif;
+}
+
 
 #nav {
     text-align: center;

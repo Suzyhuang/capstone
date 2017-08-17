@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8/>
+    <title>Roadtrip Atlas Obscura Places</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet'/>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css'
+          rel='stylesheet'/>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css'
+          rel='stylesheet'/>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.42.0/L.Control.Locate.min.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.42.0/L.Control.Locate.mapbox.css'
+          rel='stylesheet'/>
+    <!--[if lt IE 9]>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.42.0/L.Control.Locate.ie.css'
+          rel='stylesheet'/>
+    <![endif]-->
+    <link href='https://www.mapbox.com/maki/www/maki-sprite.css'
+          rel='stylesheet'/>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<style>
+</style>
+<div id='map'></div>
+<script>
+    // Set up map
+    L.mapbox.accessToken = 'pk.eyJ1Ijoic3BhcnRhbmdvIiwiYSI6IkFvOEpBcWcifQ.YJf-kBxkS9GYW2SFQ3Bpcg';
+    var map = L.mapbox.map('map', 'mapbox.streets')
+            .setView([37, -80], 6);
+    L.control.locate().addTo(map);
+    // Draw route
+    var ourCities = [
+        {name: "Boston, MA", lng: -71.058880, lat: 42.360082},
+        {name: "Providence, RI", lng: -71.389160, lat: 41.795888},
+        {name: "New York, NY", lng: -74.005941, lat: 40.712784},
+        {name: "Philadelphia, PA", lng: -75.165222, lat: 39.952584},
+        {name: "Washington, DC", lng: -77.036871, lat: 38.907192},
+        {name: "Norfolk, VA", lng: -76.285873, lat: 36.850769},
+        {name: "Wilmington, NC", lng: -77.944710, lat: 34.225726},
+        {name: "Charleston, SC", lng: -79.947510, lat: 32.768800},
+        {name: "Jacksonville, FL", lng: -81.672363, lat: 30.334954},
+        {name: "Atlanta, GA", lng: -84.385986, lat: 33.751748},
+        {name: "Nashville, TN", lng: -86.781602, lat: 36.162664},
+        {name: "Terre Haute, IN", lng: -87.413909, lat: 39.466703},
+        {name: "Chicago, IL", lng: -87.629798, lat: 41.878114}
+    ];
+    var linePoints = [];
+    ourCities.forEach(function (city) {
+        var latlng = [city.lat, city.lng];
+        L.marker(latlng, {
+            icon: L.mapbox.marker.icon({
+                'marker-size': 'large',
+                'marker-symbol': 'city',
+                'marker-color': '#fa0'
+            })
+        }).on('click', function (e) {
+            map.panTo([city.lat, city.lng]);
+        }).addTo(map);
+        linePoints.push(latlng);
+    });
+    L.polyline(linePoints).addTo(map);
+    // Handle data
+    var allPlaces = {};
+    var count = 0;
+    var onData = function (places) {
+        var markers = new L.MarkerClusterGroup();
+        Object.keys(places).forEach(function (city) {
+            places[city].forEach(function (place) {
+                if (allPlaces[place.place_id] == null) {
+                    var marker = L.marker([place.coordinates.lat, place.coordinates.lng]);
+                    if (place.reference != null) {
+                        // Google Entry
+                        marker.bindPopup(place.name + '<br/>'
+                                + place.vicinity + '<br/>'
+                                + place.types.map(function (t) {
+                                    return t.charAt(0).toUpperCase() + t.slice(1);
+                                }).join("/").replace(/_/g, " "));
+                        marker.setIcon(L.mapbox.marker.icon({
+                            'marker-size': 'large',
+                            'marker-color': '#f10',
+                            'marker-symbol': 'restaurant'
+                        }));
+                    } else {
+                        marker.bindPopup('<a target="_blank" href="http://www.atlasobscura.com/'
+                                + place.url + '">'
+                                + place.title + '</a>'
+                                + '<br/>'
+                                + place.distance_from_query
+                                + 'mi from '
+                                + city
+                        );
+                    }
+                    markers.addLayer(marker);
+                    allPlaces[place.place_id] = place;
+                    count++;
+                }
+            });
+        });
+        map.addLayer(markers);
+        console.log("Placed " + count + " markers");
+    };
+    var requestData = function (file) {
+        var cityRequest = new XMLHttpRequest();
+        cityRequest.onreadystatechange = function () {
+            if (cityRequest.readyState == 4) {
+                var places = JSON.parse(cityRequest.responseText);
+                onData(places);
+            }
+        };
+        cityRequest.open('GET', file, true);
+        cityRequest.send();
+    };
+    requestData('city_ao.json');
+    requestData('leg_ao.json');
+    requestData('city_gp.json');
+</script>
+</body>
+</html>
