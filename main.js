@@ -6,6 +6,17 @@ var mainDiv = document.createElement('div');
 mainDiv.id = 'main';
 body.appendChild(mainDiv);
 
+var eventContainer = document.createElement('div');
+eventContainer.id = 'eventContain';
+mainDiv.appendChild(eventContainer);
+let eventTitleDiv = document.createElement('div');
+eventContainer.appendChild(eventTitleDiv);
+let t = document.createTextNode('You should try...');//creating text
+eventTitleDiv.appendChild(t);
+eventTitleDiv.className = "eventTitle" //to make things different font
+
+let eventsDiv = document.createElement('div');
+eventContainer.appendChild(eventsDiv);
 
 
 // var map1 = google.maps.Map(document.getElementById('map');
@@ -32,34 +43,24 @@ function initMap() {
         console.log(url)
 
         //sends it to Yelp api to get info
-        // let interestsDiv = document.getElementById('main');
-        let eventContainer = document.createElement('div');
-        eventContainer.id = 'eventContain'
-        mainDiv.appendChild(eventContainer);
-        let eventTitleDiv = document.createElement('div');
-        eventContainer.appendChild(eventTitleDiv);
-        let t = document.createTextNode(name);
-        eventTitleDiv.appendChild(t);
-        eventTitleDiv.className = "eventTitle" //to make things different font
 
-        let eventsDiv = document.createElement('div');
-        eventContainer.appendChild(eventsDiv);
+        const xttp = new XMLHttpRequest();
+        xttp.onreadystatechange = function() {
+        if (xttp.readyState===4 && xttp.status ===200) {
+             var res = JSON.parse(xttp.responseText)
+            // for ( var i = 0; i<res.length; i++){
+            //   var string =  res[i].datetime+res[i].venue.name+res[i].venue.city;
+            //   var concertDiv = document.createElement('div');
+            //   var textEvent = document.createTextNode(string);
+            //   eventDiv.appendChild(textEvent);
+            //   eventsDiv.appendChild(concertDiv);
 
-        // const xttp = new XMLHttpRequest();
-        // xttp.onreadystatechange = function() {
-        //   if (xttp.readyState===4 && xttp.status ===200) {
-        //     var res = JSON.parse(xttp.responseText)
-        //     for ( var i = 0; i<res.length; i++){
-        //       var string =  res[i].datetime+res[i].venue.name+res[i].venue.city;
-        //       var eventDiv = document.createElement('div');
-        //       var textEvent = document.createTextNode(string);
-        //       eventDiv.appendChild(textEvent);
-        //       concertsDiv.appendChild(eventDiv);
-        //     }
-        //   }
-        // }
-        // xttp.open("GET", url, true);
-        // xttp.send();
+            // }
+            console.log(res)
+          }
+        }
+        xttp.open("GET", url, true);
+        xttp.send();
 
         });
 
