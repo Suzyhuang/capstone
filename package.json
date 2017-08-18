@@ -1,0 +1,19 @@
+{
+  "name": "day-4-node-express",
+  "version": "1.0.0",
+  "description": "Day 4: Node/Express",
+  "main": "main.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "Node",
+    "Express"
+  ],
+  "author": "Thai-Duong Nguyen",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4"
+  }
+}

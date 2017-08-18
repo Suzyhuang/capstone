@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="capstone.css">
+  
+  </head>
+  <body>
+  	<h3> The Do Map</h3>
+
+    <div id="map"></div>
+    <div id = 'main'>
+		<div class = 'eventTitle'>You should check out</div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgv5sWpAozwYjqs-bz-nZkHEzFuzD5RNI&libraries=places&callback=initMap" async defer></script>
+      <script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var map;
+      var infowindow;
+
+      var body = document.body;
+      let activityDiv = document.createElement('div');
+      activityDiv.id = 'activity';
+	  body.appendChild(activityDiv);
+	  let t = document.createTextNode('being more interesting');
+	  activityDiv.appendChild(t);
+	  activityDiv.className = "activityClass";
+
+      function initMap() {
+        var pyrmont = {lat: 37.7749, lng: -122.4194};
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: pyrmont,
+          zoom: 7
+        });
+
+        // infowindow = new google.maps.InfoWindow();
+        // var service = new google.maps.places.PlacesService(map);
+        // service.nearbySearch({
+        //   location: pyrmont,
+        //   radius: 500,
+        //   type: ['bar']
+        // }, callback);
+
+        google.maps.event.addListener(map, 'click', function(event) {
+          var service = new google.maps.places.PlacesService(map);
+          service.nearbySearch({
+            location: {lat: event.latLng.lat(), lng: event.latLng.lng()},
+            radius: 4500,
+            type: ['natural_feature']
+          }, function(results, status) {
+
+
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+     
+              	num = Math.floor(Math.random()*18);
+    
+			  	t.nodeValue = results[num].name;
+            	};
+          });          
+        });
+      }
+
+      // function callback(results, status) {
+      //   if (status === google.maps.places.PlacesServiceStatus.OK) {
+          // console.log(results);
+          // console.log(status)
+          // for (var i = 0; i < results.length; i++) {
+          //   // createMarker(results[i]);
+          // }
+      //   }
+      // }
+      
+      console.log('cafe')
+
+      function createMarker(place) {
+        // place
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+        // google.maps.event.addListener(marker, 'click', function() {
+        // infowindow.setContent(place.name);
+        // infowindow.open(map, this);
+        // });
+      }
+    </script>
+
+
+  </body>
+</html>

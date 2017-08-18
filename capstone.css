@@ -1,5 +1,6 @@
 @import url('http://fonts.googleapis.com/css?family=Just+Another+Hand');
 @import url('https://fonts.googleapis.com/css?family=Bree+Serif');
+@import url('https://fonts.googleapis.com/css?family=Acme');
 
  #map {
         height: 400px;
@@ -12,11 +13,29 @@ h3 {
   flex-direction: column;
   color:blue;
    font-family: 'Bree Serif', serif;
-   font-size:1.5em;
+   font-size:2em;
 }
 
 .eventTitle{
+
+
+    align-items: center;
+    display: flex;
+  flex-direction: column;
+  color:purple;
     font-family: 'Bree Serif', serif;
+    font-size:1.5em;
+
+}
+
+.activityClass{
+    align-items: center;
+    display: flex;
+  flex-direction: column;
+  color:black;
+  font-size:1.5em;
+    font-family: 'Acme', sans-serif;
+
 }
 
 
