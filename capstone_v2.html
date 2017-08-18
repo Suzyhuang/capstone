@@ -8,11 +8,11 @@
   
   </head>
   <body>
-  	<h3> The Do Map</h3>
+  	<h3> Let's Explore! </h3>
 
     <div id="map"></div>
     <div id = 'main'>
-		<div class = 'eventTitle'>You should check out</div>
+		<div id = 'suggestion' class = 'eventTitle'>You should check out</div>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgv5sWpAozwYjqs-bz-nZkHEzFuzD5RNI&libraries=places&callback=initMap" async defer></script>
       <script>
@@ -27,7 +27,7 @@
       let activityDiv = document.createElement('div');
       activityDiv.id = 'activity';
 	  body.appendChild(activityDiv);
-	  let t = document.createTextNode('being more interesting');
+	  let t = document.createTextNode('[click map to have a randomly generated activity]');
 	  activityDiv.appendChild(t);
 	  activityDiv.className = "activityClass";
 
@@ -47,12 +47,18 @@
         //   type: ['bar']
         // }, callback);
 
+        var typeOptions = ['natural_feature', 'amusement-park', 'museum', 'cafe', 'natural_feature'];
+        
+
         google.maps.event.addListener(map, 'click', function(event) {
           var service = new google.maps.places.PlacesService(map);
+          var typeNum = Math.floor(Math.random()*5);
+
           service.nearbySearch({
             location: {lat: event.latLng.lat(), lng: event.latLng.lng()},
             radius: 4500,
-            type: ['natural_feature']
+            // type: ['natural_feature']
+            type: typeOptions[typeNum],
           }, function(results, status) {
 
 
@@ -75,8 +81,7 @@
           // }
       //   }
       // }
-      
-      console.log('cafe')
+      console.log('You got this Suzy and Jessica!')
 
       function createMarker(place) {
         // place

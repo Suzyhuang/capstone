@@ -61,7 +61,7 @@ function searchData(req, res, next) {
 
 
 /*** Define routes here ***/
-app.use(express.static(__dirname));
+app.use(express.static(__dirname)); //Allow access with app.use
 // app.get('/', logreq, sendData);
 // // app.get('/activities', logreq, sendData);
 
@@ -70,12 +70,22 @@ app.use(express.static(__dirname));
 app.get('/', function(req,res){
   res.sendFile(path.join(__dirname + '/capstone.html'));
 });
+let data;
+let url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=AIzaSyDgv5sWpAozwYjqs-bz-nZkHEzFuzD5RNI'
 
-app.get('/test', function(req, res){
+app.get(url, function(req, res){
+  // data = req.body;
   res.send('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=AIzaSyDgv5sWpAozwYjqs-bz-nZkHEzFuzD5RNI')
   console.log('testing');
+  // res.send(data);
   res.end();
 })
+
+// app.post(url,function(req,res)){
+//   res.send(data);
+//   console.log(req);
+//   console.log(res);
+// }
 
 /*** Listen on a port here ***/
 
