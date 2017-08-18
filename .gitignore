@@ -10,6 +10,7 @@ waf3-*-*/
 
 node_modules
 package-lock.json
+*.log
 
 #General mac files
 .DS_Store
